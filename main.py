@@ -13,7 +13,7 @@ import docx
 from bs4 import BeautifulSoup
 from docx.shared import Pt, RGBColor,Mm
 import os
-import  pdfkit
+from datetime import date
 
 
 class ui_Simma():
@@ -405,10 +405,10 @@ class ui_Simma():
                         if tmp_attr["f4"]!="r" and tmp_attr["f2"] is not None and tmp_attr["f2"]!="":
                            for attr in list_attribute_name:
                                if tmp_attr["f1"] in attr:
-                                   if attr[4]=="s":
+                                  if attr[4]=="s":
                                        file.write("<p align=left style=margin-left:90><b>" + attr[1] + "</b> : " + tmp_attr["f2"] + "</p>")
-                                   elif tmp_attr["f1"]!=self.id_attr_index:
-                                       file.write("<h4 align=left style=margin-left:90>" + attr[1] + "</h4>")
+                                  elif tmp_attr["f1"]!=self.id_attr_index:
+                                       file.write("<h4 align=left style=margin-left:90>" + attr[1] + ": </h4>")
                                        file.write("<div align=left style=margin-left:90>" + tmp_attr["f2"] + "</div>")
                     #непосредственно вывод
                     if element_chaild != "":
@@ -465,6 +465,13 @@ class ui_Simma():
                    i = 3
                    child = self.recursive(self.dict_element_index3[self.ui_Simma.comboBox_report.currentText()],
                                           self.dict_element_index[self.ui_Simma.comboBox_report.currentText()][tmp_child],i,ss)
+            self.ui_Simma.treeWidget_SIMMA.setCurrentItem(tw)
+            for k,v in self.dict_element_level_1.items():
+                if v[1]== self.ui_Simma.comboBox_report.currentText():
+                   for tmp_element in self.dict_element_level_1[k][3]:
+                       if tmp_element["f1"] ==self.id_attr_text_list_1:
+                          text_1=tmp_element["f2"]
+            self.ui_Simma.textEdit_item.setText(text_1)
     def contextMenuEvent(self, point):
         menu = QtWidgets.QMenu()
         add_element = menu.addAction("Создать документ по разделу")
@@ -604,8 +611,7 @@ class ui_Simma():
                        footer_1 = tmp_element["f2"]
                     elif tmp_element["f1"] == self.id_attr_colontitul_list_all_up:
                        header_all = tmp_element["f2"]
-                    elif tmp_element["f1"] ==self.id_attr_colontitul_list_all_down:
-                       footer_all = tmp_element["f2"]
+
                     elif tmp_element["f1"] ==self.id_attr_text_list_1:
                        text_1=tmp_element["f2"]
                 # заполняем колонититулы первой страницы
@@ -620,6 +626,11 @@ class ui_Simma():
                 file.write("<br>")
                 file.write("<div align=center> " + footer_1 + "</div>")
                 file.write("<br>")
+                file.write("<br>")
+                footer_all="Создано из СиММА. Дата : "+str(date.today())
+                file.write("<div align=left> " + footer_all + "</div>")
+                user="Пользователь : " + self.login
+                file.write("<div align=left> " + user + "</div>")
                 # Добавим разрыв страницы
                 file.write("<hr>")
                 # приступаем к созданию огравления
@@ -760,13 +771,12 @@ class ui_Simma():
                     if tmp_attr["f4"] != "r" and tmp_attr["f2"] is not None and tmp_attr["f2"] != "":
                         for attr in list_attribute_name:
                             if tmp_attr["f1"] in attr:
-                                if attr[4] == "s":
+                               if tmp_attr["f1"] != self.id_attr_index:
                                     list_for_label = list_for_label + (
-                                                "<p align=left><b>" + attr[1] + "</b> : " + tmp_attr[
-                                            "f2"] + "</p>")
-                                elif tmp_attr["f1"] != self.id_attr_index:
-                                    list_for_label = list_for_label + ("<h4 align=left>" + attr[1] + "</h4>")
-                                    list_for_label = list_for_label + ("<div align=left>" + tmp_attr["f2"] + "</div>")
+                                                "<p align=left><b>" + attr[1] + "</b> : " + tmp_attr["f2"] + "</p>")
+       #                         elif tmp_attr["f1"] != self.id_attr_index:
+       #                             list_for_label = list_for_label + ("<h4 align=left>" + attr[1] + "</h4>")
+       #                             list_for_label = list_for_label + ("<div align=left>" + tmp_attr["f2"] + "</div>")
         for key, val in self.dict_class.items():
             if val == "Раздел отчета":
                 list_attribute_name = self.dict_atribut_level_2[key]

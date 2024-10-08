@@ -9,6 +9,9 @@ import html
 import json
 import  requests
 import docraptor
+import sys
+from PyQt5 import QtWidgets, uic
+import pyqtgraph as pg
 
 sid="6a86cba0afd546639283fa16aebd9171"
 mid1="m1f7"
@@ -105,19 +108,26 @@ def test_html():
     file.write(soup)
     file.close()
 
-doc_api = docraptor.DocApi()
-doc_api.api_client.configuration.username = 'YOUR_API_KEY_HERE'
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(MainWindow, self).__init__(*args, **kwargs)
 
-response = doc_api.create_doc({
-  "test": True,                                                   # test documents are free but watermarked
-  "document_content": "<html><body>Hello World</body></html>",    # supply content directly
-  # "document_url": "http://docraptor.com/examples/invoice.html", # or use a url
-  "name": "docraptor-python.pdf",                                 # help you find a document later
-  "document_type": "pdf",                                         # pdf or xls or xlsx
-  # "javascript": True,                                           # enable JavaScript processing
-  # "prince_options": {
-  #   "media": "screen",                                          # use screen styles instead of print styles
-  #   "baseurl": "http://hello.com",                              # pretend URL when using document_content
-  # },
-})
+        # Загрузите страницу интерфейса
+        uic.loadUi('Grafik.ui', self)
+        grid = QtWidgets.QGridLayout(self.Graphwidget)
+        grid.addWidget(self.Graphwidget, 0, 0)
+
+        self.plot([1,2,3,4,5,6,7,8,9,10], [30,32,34,32,33,31,29,32,35,10])
+
+    # мы добавили метод plot(), который принимает два массива:
+    # temperature и hour, затем строит данные с помощью метода graphWidget.plot().
+
+    def plot(self, hour, temperature):
+        self.Graphwidget.plot(hour, temperature)
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    main = MainWindow()
+    main.show()
+    sys.exit(app.exec_())
 
