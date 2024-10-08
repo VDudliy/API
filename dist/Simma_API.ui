@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1884</width>
+    <height>979</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Приложение для визуализации документации в  СИММа</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget_Auth">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>30</y>
+      <width>1871</width>
+      <height>900</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>1</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>900</width>
+      <height>900</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Авторизация</string>
+     </attribute>
+     <widget class="QProgressBar" name="progressBar">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>710</y>
+        <width>340</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>670</y>
+        <width>341</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Загрузка данных из модели</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_password">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>260</y>
+        <width>300</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="inputMask">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+      <property name="dragEnabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>260</y>
+        <width>171</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Пароль</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_login">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>170</y>
+        <width>300</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>180</y>
+        <width>161</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Логин</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_URL">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>80</y>
+        <width>300</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>90</y>
+        <width>221</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>URL метамодели</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>400</y>
+        <width>401</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Необходимо авторизоваться </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_logo">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>10</y>
+        <width>1081</width>
+        <height>591</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_Auth">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>350</y>
+        <width>300</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Авторизоваться</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_exit">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>800</y>
+        <width>300</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Закрыть</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="title">
+      <string>Отчеты</string>
+     </attribute>
+     <widget class="QTreeWidget" name="treeWidget_SIMMA">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>601</width>
+        <height>771</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <property name="midLineWidth">
+       <number>1</number>
+      </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_report">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>40</y>
+        <width>411</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="title">
+       <string>Отчеты доступные для построения</string>
+      </property>
+      <widget class="QComboBox" name="comboBox_report">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>391</width>
+         <height>30</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_button">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>260</y>
+        <width>411</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="title">
+       <string>Варианты формирования документации</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <widget class="QPushButton" name="pushButton_all">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>381</width>
+         <height>35</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>7</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Создает полный документ с отчетом в установленном формате</string>
+       </property>
+       <property name="text">
+        <string>Полный документ</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_slice">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>100</y>
+         <width>381</width>
+         <height>35</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>7</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Позволяет сформировать отчет по выделенному фрагменту</string>
+       </property>
+       <property name="text">
+        <string>Выделенный фрагмент</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QProgressBar" name="progressBar_report">
+      <property name="geometry">
+       <rect>
+        <x>1440</x>
+        <y>460</y>
+        <width>411</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_format">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>150</y>
+        <width>411</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="title">
+       <string>Формат файла с отчетом</string>
+      </property>
+      <widget class="QCheckBox" name="checkBox_html">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>181</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>HTML</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QTextEdit" name="textEdit_item">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>20</y>
+        <width>791</width>
+        <height>771</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
+      <property name="midLineWidth">
+       <number>1</number>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1884</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>lineEdit_password</tabstop>
+  <tabstop>tabWidget_Auth</tabstop>
+  <tabstop>lineEdit_login</tabstop>
+  <tabstop>lineEdit_URL</tabstop>
+  <tabstop>pushButton_Auth</tabstop>
+  <tabstop>treeWidget_SIMMA</tabstop>
+  <tabstop>comboBox_report</tabstop>
+  <tabstop>pushButton_all</tabstop>
+  <tabstop>pushButton_slice</tabstop>
+  <tabstop>checkBox_html</tabstop>
+  <tabstop>pushButton_exit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
