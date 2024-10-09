@@ -27,7 +27,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
+      <y>0</y>
       <width>1871</width>
       <height>900</height>
      </rect>
@@ -263,17 +263,17 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>20</y>
+        <x>440</x>
+        <y>0</y>
         <width>601</width>
-        <height>771</height>
+        <height>851</height>
        </rect>
       </property>
       <property name="frameShape">
        <enum>QFrame::Box</enum>
       </property>
       <property name="lineWidth">
-       <number>3</number>
+       <number>2</number>
       </property>
       <property name="midLineWidth">
        <number>1</number>
@@ -287,8 +287,8 @@
      <widget class="QGroupBox" name="groupBox_report">
       <property name="geometry">
        <rect>
-        <x>1430</x>
-        <y>40</y>
+        <x>10</x>
+        <y>30</y>
         <width>411</width>
         <height>91</height>
        </rect>
@@ -306,7 +306,7 @@
         <rect>
          <x>10</x>
          <y>40</y>
-         <width>391</width>
+         <width>381</width>
          <height>30</height>
         </rect>
        </property>
@@ -315,8 +315,8 @@
      <widget class="QGroupBox" name="groupBox_button">
       <property name="geometry">
        <rect>
-        <x>1430</x>
-        <y>260</y>
+        <x>10</x>
+        <y>250</y>
         <width>411</width>
         <height>171</height>
        </rect>
@@ -338,7 +338,7 @@
       <widget class="QPushButton" name="pushButton_all">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>10</x>
          <y>40</y>
          <width>381</width>
          <height>35</height>
@@ -361,7 +361,7 @@
       <widget class="QPushButton" name="pushButton_slice">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>10</x>
          <y>100</y>
          <width>381</width>
          <height>35</height>
@@ -385,9 +385,9 @@
      <widget class="QProgressBar" name="progressBar_report">
       <property name="geometry">
        <rect>
-        <x>1440</x>
-        <y>460</y>
-        <width>411</width>
+        <x>20</x>
+        <y>450</y>
+        <width>421</width>
         <height>23</height>
        </rect>
       </property>
@@ -398,8 +398,8 @@
      <widget class="QGroupBox" name="groupBox_format">
       <property name="geometry">
        <rect>
-        <x>1430</x>
-        <y>150</y>
+        <x>10</x>
+        <y>140</y>
         <width>411</width>
         <height>80</height>
        </rect>
@@ -435,10 +435,10 @@
      <widget class="QTextEdit" name="textEdit_item">
       <property name="geometry">
        <rect>
-        <x>630</x>
-        <y>20</y>
-        <width>791</width>
-        <height>771</height>
+        <x>1050</x>
+        <y>0</y>
+        <width>811</width>
+        <height>851</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -448,7 +448,7 @@
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="lineWidth">
-       <number>3</number>
+       <number>2</number>
       </property>
       <property name="midLineWidth">
        <number>1</number>

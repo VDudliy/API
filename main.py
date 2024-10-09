@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 from docx.shared import Pt, RGBColor,Mm
 import os
 from datetime import date
+import re
 
 
 class ui_Simma():
@@ -600,7 +601,9 @@ class ui_Simma():
         self.ui_Simma.progressBar_report.maximum = 100
         valBar=0
         self.ui_Simma.progressBar_report.setValue(valBar)
-        file = open(self.ui_Simma.comboBox_report.currentText()+'.html', "w", encoding='utf-16')
+        filename=self.ui_Simma.comboBox_report.currentText()
+        filename = re.sub(r"[^A-Za-zа-яА-Я]+", '_', filename)
+        file = open(filename + '.html', 'w', encoding='utf-16')
         file.write("<html>")
         for k,v in self.dict_element_level_1.items():
             if v[1]== self.ui_Simma.comboBox_report.currentText():
@@ -753,10 +756,9 @@ class ui_Simma():
     def slice_doc_html(self):
         valBar = 0
         self.ui_Simma.progressBar_report.setValue(valBar)
-        filename=self.ui_Simma.comboBox_report.currentText() + '_' + self.ui_Simma.treeWidget_SIMMA.currentItem().text(0) + '.html'
-        filename=filename.replace(":","_")
-        filename = filename.replace("\t", "")
-        file = open(filename, 'w', encoding='utf-16')
+        filename=self.ui_Simma.comboBox_report.currentText() + '_' + self.ui_Simma.treeWidget_SIMMA.currentItem().text(0)
+        filename=re.sub(r"[^A-Za-zа-яА-Я]+",'_', filename)
+        file = open(filename+ '.html', 'w', encoding='utf-16')
         file.write("<html>")
         valBar = 5
         self.ui_Simma.progressBar_report.setValue(valBar)
