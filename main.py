@@ -1,21 +1,18 @@
 import sys
-from sys import prefix
-
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QTreeWidget
 import SIMMA_Class as All_Class
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QEvent
-from PyQt5.QtWidgets import QTreeWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QTreeWidgetItem, QMessageBox, QApplication
+from PyQt5.QtChart import QChart, QChartView,QLineSeries,QPieSeries
 import json
 import copy
 import docx
 from bs4 import BeautifulSoup
 from docx.shared import Pt, RGBColor,Mm
-import os
 from datetime import date
 import re
-
+from PyQt5.QtCore import QPoint
 
 class ui_Simma():
     url = ""
@@ -60,6 +57,7 @@ class ui_Simma():
         self.ui_Simma.pushButton_exit.clicked.connect(self.exit_sys)
         self.ui_Simma.pushButton_slice.clicked.connect(self.slice_doc_html)
         self.ui_Simma.treeWidget_SIMMA.itemClicked.connect(self.item_view)
+        self.ui_Simma.pushButton_create_diagramm.clicked.connect(self.def_diagramm)
         self.ui_Simma.show()
 
     def set_log_data(self):
@@ -180,7 +178,8 @@ class ui_Simma():
         if len(self.sid) == 32:
            self.make_tree()
            self.init_tree()
-        elif self.ui_Simma.tabWidget_Auth.currentIndex()==1:
+           self.init_graph()
+        elif self.ui_Simma.tabWidget_Auth.currentIndex()==1 or self.ui_Simma.tabWidget_Auth.currentIndex()==2:
            self.show_critical_messagebox(1)
            self.ui_Simma.tabWidget_Auth.setCurrentIndex(0)
     def upload_data_from_simma(self):
@@ -751,8 +750,6 @@ class ui_Simma():
             descr_method=self.dict_element_level_3[self.dict_item_content[self.ui_Simma.comboBox_report.currentText()]][tmp_method[0]][2]
             file.write("<tr><td>"+str(i)+"</td><td><a href=#"+tmp_method[0]+">"+name_method+"</a></td></tr>")
         file.write("</table>")
-
-
     def slice_doc_html(self):
         valBar = 0
         self.ui_Simma.progressBar_report.setValue(valBar)
@@ -798,12 +795,59 @@ class ui_Simma():
         valBar = 100
         self.ui_Simma.progressBar_report.setValue(valBar)
         self.show_Ok_messagebox(3, ".html")
+    def init_graph(self):
+        if len(self.sid) == 32:
+            self.ui_Simma.listWidget_report.clear()
+            self.ui_Simma.listWidget_attr_report.clear()
+            sc = All_Class.Simma_class
+            sc.o_id = list(self.dict_class.keys())[0]
+            about_class = sc.gtvt(sc, self.url, self.mid, self.sid)
+            for tmp in about_class:
+                self.ui_Simma.listWidget_report.addItem(tmp[1])
+            attr_diagr=["Автор контента","Статус контента"]
+            for tmp in  attr_diagr:
+                self.ui_Simma.listWidget_attr_report.addItem(tmp)
+        self.ui_Simma.listWidget_report.setCurrentRow(0)
+        self.ui_Simma.listWidget_attr_report.setCurrentRow(0)
+    def def_diagramm(self):
+        self.view_round_diagramm_standaramm(self.ui_Simma.listWidget_report.currentItem().text(),self.ui_Simma.listWidget_attr_report.currentItem().text())
+    def view_round_diagramm_standaramm(self, report, type_report):
+        klass=self.dict_class_content[self.dict_item_content[report]]
+        dict_element=self.dict_element_level_3[self.dict_item_content[report]]
+        valBar = 0
+        self.ui_Simma.progressBar_diagramm.setValue(valBar)
+        tmp_val=len(dict_element)
+        prirost=100/tmp_val
+        tmp_series = []
+        for k,v in dict_element.items():
+            tmp_element = All_Class.Simma_element
+            tmp_element.e_id = k
+            about_element = tmp_element.gea(tmp_element, self.url, self.mid, self.sid)
+            for tmp_attr in about_element:
+                if tmp_attr[0] == "<Автор>":
+                   if tmp_attr[1] in tmp_series:
+                      index=tmp_series.index(tmp_attr[1])
+                      tmp_series[index+1]=tmp_series[index+1]+1
+                   else:
+                       tmp_series.append(tmp_attr[1])
+                       tmp_series.append(1)
+            valBar =valBar+round(prirost)
+            self.ui_Simma.progressBar_diagramm.setValue(valBar)
+        chart=QChart()
+        series=QPieSeries()
+        for i in range(0,len(tmp_series)-1,2):
+            series.append(tmp_series[i],tmp_series[i+1])
 
-
-
+        chart.addSeries(series)
+        chart.createDefaultAxes()
+        chart.setTheme(QChart.ChartTheme.ChartThemeBlueCerulean)
+        chart.setTitle(self.ui_Simma.listWidget_attr_report.currentItem().text()+" ( " +self.ui_Simma.listWidget_report.currentItem().text()+" )")
+        valBar = 100
+        self.ui_Simma.progressBar_diagramm.setValue(valBar)
+        self.ui_Simma.graphicsView_diagram.setChart(chart)
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication([])
+    app =QApplication(sys.argv)
     mainUi = ui_Simma()
     app.exec()
 

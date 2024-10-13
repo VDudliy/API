@@ -26,8 +26,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>-10</x>
+      <y>60</y>
       <width>1871</width>
       <height>900</height>
      </rect>
@@ -458,6 +458,118 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Диаграммы</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>310</y>
+        <width>301</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string> Доступные диаграммы</string>
+      </property>
+      <widget class="QListWidget" name="listWidget_attr_report">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>256</width>
+         <height>192</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_Graph">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>20</y>
+        <width>211</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Диаграмма</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>291</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Существующие отчеты</string>
+      </property>
+      <widget class="QListWidget" name="listWidget_report">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>256</width>
+         <height>192</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QChartView" name="graphicsView_diagram">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>61</y>
+        <width>1151</width>
+        <height>801</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_create_diagramm">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>630</y>
+        <width>261</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Построить диаграмму</string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="progressBar_diagramm">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>580</y>
+        <width>301</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+     <zorder>groupBox_2</zorder>
+     <zorder>groupBox</zorder>
+     <zorder>label_Graph</zorder>
+     <zorder>graphicsView_diagram</zorder>
+     <zorder>pushButton_create_diagramm</zorder>
+     <zorder>progressBar_diagramm</zorder>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -472,6 +584,13 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>PyQt5.QtChart</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>lineEdit_password</tabstop>
   <tabstop>tabWidget_Auth</tabstop>
