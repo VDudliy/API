@@ -1,10 +1,14 @@
 import sys
 from PyQt5 import QtWidgets, QtCore
+from lxml.doctestcompare import strip
+
 import SIMMA_Class as All_Class
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import QTreeWidgetItem, QMessageBox, QApplication
-from PyQt5.QtChart import QChart, QChartView,QLineSeries,QPieSeries
+from PyQt5.QtChart import QChart, QChartView,QLineSeries,QPieSeries,QPieSlice,QBarSet,QStackedBarSeries,QBarCategoryAxis, QValueAxis
+
+from PyQt5.QtGui import QPen
 import json
 import copy
 import docx
@@ -36,6 +40,7 @@ class ui_Simma():
     id_attr_text_list_1 = "a53fa" # атрибут с текстом первого листа
     id_attr_level2_preambula="a5401" # атрибут с преамбулой у разделов
     id_attr_section="a53ff" # атрибут в котором описано -какие разделы содержит отчет. Это связь.
+    id_attr_status="a53b7" # атрибут статуса в каталлоге контента
     dict_element_index={}
     dict_element_index3 = {}
     dict_class_content={}
@@ -43,7 +48,7 @@ class ui_Simma():
     dict_list_level1_2={}
     dict_attribute_config={}# сюда считаем из конфигурацйии атрибуты
     list_level_element=[]
-
+    parametr=0
 
     def __init__(self):
         self.ui_Simma = loadUi("Simma_API.ui")
@@ -59,7 +64,6 @@ class ui_Simma():
         self.ui_Simma.treeWidget_SIMMA.itemClicked.connect(self.item_view)
         self.ui_Simma.pushButton_create_diagramm.clicked.connect(self.def_diagramm)
         self.ui_Simma.show()
-
     def set_log_data(self):
         try:
             self.show_logo()
@@ -804,47 +808,124 @@ class ui_Simma():
             about_class = sc.gtvt(sc, self.url, self.mid, self.sid)
             for tmp in about_class:
                 self.ui_Simma.listWidget_report.addItem(tmp[1])
-            attr_diagr=["Автор контента","Статус контента"]
+            attr_diagr=["Автор контента","Автор изменений контента","Статусы контента"]
             for tmp in  attr_diagr:
                 self.ui_Simma.listWidget_attr_report.addItem(tmp)
-        self.ui_Simma.listWidget_report.setCurrentRow(0)
-        self.ui_Simma.listWidget_attr_report.setCurrentRow(0)
+            self.ui_Simma.listWidget_report.setCurrentRow(0)
+            self.ui_Simma.listWidget_attr_report.setCurrentRow(0)
     def def_diagramm(self):
-        self.view_round_diagramm_standaramm(self.ui_Simma.listWidget_report.currentItem().text(),self.ui_Simma.listWidget_attr_report.currentItem().text())
-    def view_round_diagramm_standaramm(self, report, type_report):
+        match self.ui_Simma.listWidget_attr_report.currentItem().text():
+            case "Автор контента":
+                 self.view_round_diagramm_standart(self.ui_Simma.listWidget_report.currentItem().text(),self.ui_Simma.listWidget_attr_report.currentItem().text())
+            case "Автор изменений контента":
+                 self.view_round_diagramm_standart(self.ui_Simma.listWidget_report.currentItem().text(),self.ui_Simma.listWidget_attr_report.currentItem().text())
+            case "Статусы контента":
+                 self.view_bar_diagramm_one_attr(self.ui_Simma.listWidget_report.currentItem().text(), self.id_attr_status)
+    def view_round_diagramm_standart(self, report, type_report):
         klass=self.dict_class_content[self.dict_item_content[report]]
-        dict_element=self.dict_element_level_3[self.dict_item_content[report]]
-        valBar = 0
-        self.ui_Simma.progressBar_diagramm.setValue(valBar)
-        tmp_val=len(dict_element)
-        prirost=100/tmp_val
+        sc = All_Class.Simma_class
+        sc.o_id = klass
+        about_class = sc.gca(sc, self.url, self.mid, self.sid)
+        list_for_sevt = []
+        for tmp in about_class:
+            list_for_sevt.append(tmp[0])
+        list_for_sevt.append("descr")
+        list_for_sevt.append("syscr")
+        sc.sevt(sc, self.url, self.mid, self.sid, list_for_sevt, [])
+        about_class = sc.gtvt(sc, self.url, self.mid, self.sid)
+        sc.sevt(sc, self.url, self.mid, self.sid, ['name'], [])
         tmp_series = []
-        for k,v in dict_element.items():
-            tmp_element = All_Class.Simma_element
-            tmp_element.e_id = k
-            about_element = tmp_element.gea(tmp_element, self.url, self.mid, self.sid)
-            for tmp_attr in about_element:
-                if tmp_attr[0] == "<Автор>":
-                   if tmp_attr[1] in tmp_series:
-                      index=tmp_series.index(tmp_attr[1])
+        match type_report:
+            case "Автор контента":
+                 attr_for_select=0
+            case "Автор изменений контента":
+                 attr_for_select = 2
+        for tmp_element in about_class:
+            for tmp_attr in tmp_element[3]:
+                if tmp_attr["f1"] =="syscr":
+                   if tmp_attr["f3"][attr_for_select] in tmp_series:
+                      index=tmp_series.index(tmp_attr["f3"][attr_for_select])
                       tmp_series[index+1]=tmp_series[index+1]+1
                    else:
-                       tmp_series.append(tmp_attr[1])
-                       tmp_series.append(1)
-            valBar =valBar+round(prirost)
-            self.ui_Simma.progressBar_diagramm.setValue(valBar)
-        chart=QChart()
+                      tmp_series.append(tmp_attr["f3"][attr_for_select])
+                      tmp_series.append(1)
         series=QPieSeries()
         for i in range(0,len(tmp_series)-1,2):
             series.append(tmp_series[i],tmp_series[i+1])
-
+        series.setLabelsVisible(True)
+#        series.setLabelsPosition(QtChart.QPieSlice.LabelInsideHorizontal)
+        for slice in series.slices():
+            slice.setLabel("{:.2f}%".format(100 * slice.percentage()))
+        chart = QChart()
         chart.addSeries(series)
         chart.createDefaultAxes()
         chart.setTheme(QChart.ChartTheme.ChartThemeBlueCerulean)
+        chart.setAnimationOptions(QChart.AnimationOption.AllAnimations)
         chart.setTitle(self.ui_Simma.listWidget_attr_report.currentItem().text()+" ( " +self.ui_Simma.listWidget_report.currentItem().text()+" )")
-        valBar = 100
-        self.ui_Simma.progressBar_diagramm.setValue(valBar)
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+        for i in range(round(len(tmp_series)/2)):
+            if i==0:
+               chart.legend().markers(series)[i].setLabel(tmp_series[i])
+            else:
+               chart.legend().markers(series)[i].setLabel(tmp_series[i*2])
+        my_slice=series.slices()[0]
+        my_slice.setExploded(True)
+        my_slice.setLabelVisible(True)
+        my_slice.setBrush(Qt.GlobalColor.red)
+        chart.legend().hide()
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignmentFlag.AlignBottom)
         self.ui_Simma.graphicsView_diagram.setChart(chart)
+    def view_bar_diagramm_one_attr(self,report,id_attr):
+        klass = self.dict_class_content[self.dict_item_content[report]]
+        sc = All_Class.Simma_class
+        sc.o_id = klass
+        about_class = sc.gca(sc, self.url, self.mid, self.sid)
+        list_for_sevt = []
+        for tmp in about_class:
+            list_for_sevt.append(tmp[0])
+        sc.sevt(sc, self.url, self.mid, self.sid, list_for_sevt, [])
+        about_class = sc.gtvt(sc, self.url, self.mid, self.sid)
+        sc.sevt(sc, self.url, self.mid, self.sid, ['name'], [])
+        tmp_series = []
+        for tmp_element in about_class:
+            for tmp_attr in tmp_element[3]:
+                if tmp_attr["f1"] ==id_attr:
+                     if tmp_attr["f2"] in tmp_series:
+                         index=tmp_series.index(tmp_attr["f2"])
+                         tmp_series[index+1]=tmp_series[index+1]+1
+                     else:
+                         tmp_series.append(tmp_attr["f2"])
+                         tmp_series.append(1)
+        set0 = QBarSet("Статусы элементов контента")
+        set0.clicked().self.parametr=2
+        set0.clicked.connect(self.chaild_window)
+
+        for i in range(1,len(tmp_series),2):
+            set0.append(tmp_series[i])
+        series = QStackedBarSeries()
+        series.append(set0)
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle("Количество элементов (шт.) в соответсвующе статусе")
+        chart.setAnimationOptions(QChart.AnimationOption.SeriesAnimations)
+        categories = []
+        for i in range(0,len(tmp_series) - 1,2):
+            categories.append(tmp_series[i])
+        axisX = QBarCategoryAxis()
+        axisX.append(categories)
+        chart.addAxis(axisX, Qt.AlignmentFlag.AlignBottom)
+        series.attachAxis(axisX)
+        axisY = QValueAxis()
+        chart.addAxis(axisY, Qt.AlignmentFlag.AlignLeft)
+        series.attachAxis(axisY)
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignmentFlag.AlignBottom)
+        self.ui_Simma.graphicsView_diagram.setChart(chart)
+
+    def chaild_window(self):
+        print(self.parametr)
 
 if __name__ == '__main__':
     app =QApplication(sys.argv)

@@ -550,25 +550,11 @@
        <string>Построить диаграмму</string>
       </property>
      </widget>
-     <widget class="QProgressBar" name="progressBar_diagramm">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>580</y>
-        <width>301</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-     </widget>
      <zorder>groupBox_2</zorder>
      <zorder>groupBox</zorder>
      <zorder>label_Graph</zorder>
      <zorder>graphicsView_diagram</zorder>
      <zorder>pushButton_create_diagramm</zorder>
-     <zorder>progressBar_diagramm</zorder>
     </widget>
    </widget>
   </widget>
